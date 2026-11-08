@@ -1,0 +1,6 @@
+services:
+  app:
+   image: todo-backed
+   build: .
+   ports:
+     - 3000:3000

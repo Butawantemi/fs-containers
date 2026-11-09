@@ -1,0 +1,71 @@
+todo-backend ❯ sudo sudo docker start todo-backend-mongo-1
+todo-backend-mongo-1
+todo-backend ❯ sudo docker exec -it todo-backend-mongo-1 bash
+root@bb49e8982133:/# ls
+bin   data  docker-entrypoint-initdb.d  home        lib    media  opt   root  sbin  sys  usr
+boot  dev   etc                         js-yaml.js  lib64  mnt    proc  run   srv   tmp  var
+root@bb49e8982133:/# mongosh -u root -p
+Enter password: *******
+Current Mongosh Log ID: 6af18873991db68d6785df98
+Connecting to:          mongodb://<credentials>@127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.14.0
+Using MongoDB:          9.0.4
+Using Mongosh:          2.14.0
+
+For mongosh info see: https://www.mongodb.com/docs/mongodb-shell/
+
+------
+   The server generated these startup warnings when booting
+   2026-11-09T08:40:59.349+00:00: Using the XFS filesystem is strongly recommended with the WiredTiger storage engine. See http://dochub.mongodb.org/core/prodnotes-filesystem
+   2026-11-09T08:41:01.182+00:00: Soft rlimits for open file descriptors too low
+   2026-11-09T08:41:01.182+00:00: For customers running the current memory allocator, we suggest changing the contents of the following sysfsFile
+   2026-11-09T08:41:01.182+00:00: For customers running the current memory allocator, we suggest changing the contents of the following sysfsFile
+   2026-11-09T08:41:01.182+00:00: We suggest setting the contents of sysfsFile to 0.
+------
+
+test> show dbs
+admin         100.00 KiB
+config         36.00 KiB
+local          72.00 KiB
+the_database   56.00 KiB
+test> use the_database
+switched to db the_database
+the_database> show collections
+todos
+the_database> db.todos.find({})
+[
+  {
+    _id: ObjectId('6af026abd84c46005f424ee0'),
+    text: "test if it's working!...",
+    done: true
+  },
+  {
+    _id: ObjectId('6af026abd84c46005f424ee1'),
+    text: 'Learn about containers',
+    done: false
+  }
+]
+the_database> db.todos.insertOne({text: "Increase the number of tools in my tool belt", done: false})
+{
+  acknowledged: true,
+  insertedId: ObjectId('6af18a66991db68d6785df99')
+}
+the_database> db.todos.find({})
+[
+  {
+    _id: ObjectId('6af026abd84c46005f424ee0'),
+    text: "test if it's working!...",
+    done: true
+  },
+  {
+    _id: ObjectId('6af026abd84c46005f424ee1'),
+    text: 'Learn about containers',
+    done: false
+  },
+  {
+    _id: ObjectId('6af18a66991db68d6785df99'),
+    text: 'Increase the number of tools in my tool belt',
+    done: false
+  }
+]
+the_database> exit
+root@bb49e8982133:/# 

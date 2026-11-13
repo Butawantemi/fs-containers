@@ -2,14 +2,11 @@ FROM node:24
 
 WORKDIR /usr/src/app
 
-COPY --chown=node:node . .
+COPY package*.json ./
+RUN npm ci --only=production
 
-RUN npm ci 
+COPY . .
 
-ENV DEBUG=playground:*
-
-EXPOSE 3000
-
-USER node
+ENV NODE_ENV=production
 
 CMD ["npm", "start"]
